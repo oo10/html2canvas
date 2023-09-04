@@ -11,14 +11,15 @@ import {createCounterText} from '../css/types/functions/counter';
 import {POSITION} from '../css/property-descriptors/position';
 
 export class StackingContext {
-    element: ElementPaint;
-    negativeZIndex: StackingContext[];
+    element: ElementPaint; // 层叠上下文顶端节点
+    negativeZIndex: StackingContext[]; // z-index为负的次级上下文
+    // z-index为0|auto || 设置了tranform || 设置了Opacity的次级上下文
     zeroOrAutoZIndexOrTransformedOrOpacity: StackingContext[];
-    positiveZIndex: StackingContext[];
-    nonPositionedFloats: StackingContext[];
-    nonPositionedInlineLevel: StackingContext[];
-    inlineLevel: ElementPaint[];
-    nonInlineLevel: ElementPaint[];
+    positiveZIndex: StackingContext[]; // z-index为正的次级层叠
+    nonPositionedFloats: StackingContext[]; // 浮动次级层叠
+    nonPositionedInlineLevel: StackingContext[]; // 内联次级层叠
+    inlineLevel: ElementPaint[]; // 内联子元素 非上下文
+    nonInlineLevel: ElementPaint[]; // 块级子元素 非上下文
 
     constructor(container: ElementPaint) {
         this.element = container;

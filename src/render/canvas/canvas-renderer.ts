@@ -386,17 +386,21 @@ export class CanvasRenderer extends Renderer {
                 }
             }
         }
-
+        
+        // 普通输入框并且有值
         if (isTextInputElement(container) && container.value.length) {
+            // 文字样式
             const [fontFamily, fontSize] = this.createFontStyle(styles);
             const {baseline} = this.fontMetrics.getMetrics(fontFamily, fontSize);
 
             this.ctx.font = fontFamily;
             this.ctx.fillStyle = asString(styles.color);
 
+            // 对齐
             this.ctx.textBaseline = 'alphabetic';
             this.ctx.textAlign = canvasTextAlign(container.styles.textAlign);
 
+            // 输入框位置和大小
             const bounds = contentBox(container);
 
             let x = 0;
@@ -409,7 +413,7 @@ export class CanvasRenderer extends Renderer {
                     x += bounds.width;
                     break;
             }
-
+            // 文字位置
             const textBounds = bounds.add(x, 0, 0, -bounds.height / 2 + 1);
 
             this.ctx.save();
@@ -419,8 +423,9 @@ export class CanvasRenderer extends Renderer {
                 new Vector(bounds.left + bounds.width, bounds.top + bounds.height),
                 new Vector(bounds.left, bounds.top + bounds.height)
             ]);
-
+            // 剪切路径，之后都在这个范围内
             this.ctx.clip();
+            // 绘制文字
             this.renderTextWithLetterSpacing(
                 new TextBounds(container.value, textBounds),
                 styles.letterSpacing,

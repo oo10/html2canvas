@@ -2,14 +2,14 @@ import {Matrix} from '../css/property-descriptors/transform';
 import {Path} from './path';
 
 export const enum EffectType {
-    TRANSFORM = 0,
-    CLIP = 1,
-    OPACITY = 2
+    TRANSFORM = 0, // 变换效果，设置transform时触发
+    CLIP = 1, // 剪切效果，overflow不为visible时触发
+    OPACITY = 2 // 不透明度效果，opacity < 1时触发
 }
 
 export const enum EffectTarget {
-    BACKGROUND_BORDERS = 1 << 1,
-    CONTENT = 1 << 2
+    BACKGROUND_BORDERS = 1 << 1, // 背景边框
+    CONTENT = 1 << 2  // 内容
 }
 
 export interface IElementEffect {

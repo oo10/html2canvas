@@ -6,10 +6,10 @@ import {Context} from '../core/context';
 import {DebuggerType, isDebugging} from '../core/debugger';
 
 export const enum FLAGS {
-    CREATES_STACKING_CONTEXT = 1 << 1,
-    CREATES_REAL_STACKING_CONTEXT = 1 << 2,
-    IS_LIST_OWNER = 1 << 3,
-    DEBUG_RENDER = 1 << 4
+    CREATES_STACKING_CONTEXT = 1 << 1, // 是否为层叠上下文
+    CREATES_REAL_STACKING_CONTEXT = 1 << 2, // 是否为”真“层叠上下文
+    IS_LIST_OWNER = 1 << 3, // 是否为ol、ul、menu等列表容器
+    DEBUG_RENDER = 1 << 4 // 该工程自身的debug相关
 }
 
 export class ElementContainer {

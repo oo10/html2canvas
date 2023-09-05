@@ -22,16 +22,21 @@ export const parseTextBounds = (
     styles: CSSParsedDeclaration,
     node: Text
 ): TextBounds[] => {
+    // return styles.letterSpacing !== 0 ? segmentGraphemes(value) : segmentWords(value, styles);
+    // letterSpacing 不为0 按字分组 为0 按词分组
     const textList = breakText(value, styles);
     const textBounds: TextBounds[] = [];
     let offset = 0;
     textList.forEach((text) => {
         if (styles.textDecorationLine.length || text.trim().length > 0) {
             if (FEATURES.SUPPORT_RANGE_BOUNDS) {
+                // 创建光标 选中文字 通过getClientRects获取ClientRect集合 包含视窗位置
                 const clientRects = createRange(node, offset, text.length).getClientRects();
+                // 如果有多行 则按继续字分段
                 if (clientRects.length > 1) {
                     const subSegments = segmentGraphemes(text);
                     let subOffset = 0;
+                    // 遍历继续创建光标 获取每个字的视窗位置
                     subSegments.forEach((subSegment) => {
                         textBounds.push(
                             new TextBounds(
@@ -42,6 +47,7 @@ export const parseTextBounds = (
                                 )
                             )
                         );
+                        // 计算下一个 range 的偏移量
                         subOffset += subSegment.length;
                     });
                 } else {
